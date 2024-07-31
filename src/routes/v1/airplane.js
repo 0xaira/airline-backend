@@ -2,12 +2,13 @@ const express = require('express');
 const { AirplaneController } = require('../../controllers');
 
 const router = express.Router();
-
+const { AirplaneMiddlewares } = require('../../middlewares');
 /**
  * POST /api/v1/airplanes
  * Create a new airplane
  */
-router.post('/', async (req, res) => {
+
+router.post('/', AirplaneMiddlewares.validateCreateRequest, async (req, res) => {
   try {
     await AirplaneController.createAirplane(req, res);
   } catch (error) {
@@ -19,6 +20,7 @@ router.post('/', async (req, res) => {
     });
   }
 });
+
 
 /**
  * GET /api/v1/airplanes
